@@ -24,16 +24,34 @@ jobs:
     needs: test_suite
     runs-on: ubuntu-latest
     steps:
-    - name: Fresh clone and install
-      uses: appleboy/ssh-action@master
-      with:
-        host: 54.147.163.45
-        username: github-actions
-        key: ${{ secrets.REE }}
-        port: 22
-        script: |
-          rm -rf squiz
-          git clone https://github.com/mo-ccc/squiz.git
-          python3.8 -m venv /home/github-actions/squiz/venv
-          source /home/github-actions/squiz/venv/bin/activate
-          pip3 install -r squiz/requirements.txt
+      - name: Fresh clone and install
+        uses: appleboy/ssh-action@master
+        with:
+          host: 54.147.163.45
+          username: github-actions
+          key: ${{ secrets.REE }}
+          port: 22
+          script: |
+            rm -rf squiz
+            git clone https://github.com/mo-ccc/squiz.git
+            python3.8 -m venv /home/github-actions/squiz/venv
+            source /home/github-actions/squiz/venv/bin/activate
+            pip install -r squiz/requirements.txt
+  other:
+    needs: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: mypy and flake8
+        uses: appleboy/ssh-action@master
+        with:
+          host: 54.147.163.45
+          username: github-actions
+          key: ${{ secrets.REE }}
+          port: 22
+          script: |
+            source /home/github-actions/squiz/venv/bin/activate
+            pip install flake8
+            python -m mypy main.py
+            python -m flake8 main.py
+            
+        
