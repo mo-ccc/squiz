@@ -33,7 +33,7 @@ jobs:
         port: 22
         script: |
           rm -rf squiz
-          git clone https://github.com/mo-cc/squiz.gits
+          git clone https://github.com/mo-ccc/squiz.git
           python3.8 -m venv /home/github-actions/squiz/venv
           source /home/github-actions/squiz/venv/bin/activate
           pip3 install -r squiz/requirements.txt
