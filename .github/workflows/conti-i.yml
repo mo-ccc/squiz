@@ -51,7 +51,7 @@ jobs:
           script: |
             source /home/github-actions/squiz/venv/bin/activate
             pip install flake8
-            python -m mypy main.py
-            python -m flake8 main.py
+            python -m mypy /home/github-actions/squiz/main.py
+            python -m flake8 /home/github-actions/squiz/main.py
             
         
